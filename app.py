@@ -6,21 +6,21 @@ import seaborn as sns
 import io
 import os
 
-# Configuraci�n de la p�gina web
+# Configuración de la página web
 st.set_page_config(
     page_title="DataClean - Limpieza Inteligente de Datos",
-    page_icon="?",
+    page_icon="🧼",
     layout="wide"
 )
 
 # Estilos de encabezado
-st.title("? DataClean Automatizado")
-st.markdown("### Transforma datasets sucios en datos listos para producci�n, sin escribir una sola l�nea de c�digo.")
+st.title("🧼 DataClean Automatizado")
+st.markdown("### Transforma datasets sucios en datos listos para producción, sin escribir una sola línea de código.")
 st.write("---")
 
 # 1. Carga de Archivos
 uploaded_file = st.file_uploader(
-    "Selecciona o arrastra tu archivo aqu� (Formatos admitidos: .csv, .xlsx)",
+    "Selecciona o arrastra tu archivo aquí (Formatos admitidos: .csv, .xlsx)",
     type=["csv", "xlsx"]
 )
 
@@ -32,10 +32,10 @@ if uploaded_file is not None:
         else:
             df = pd.read_excel(uploaded_file)
 
-        st.success("�Archivo cargado exitosamente!")
+        st.success("¡Archivo cargado exitosamente!")
 
-        # 2. Diagn�stico Inicial del Dataset
-        st.subheader("? Diagn�stico Inicial del Dataset")
+        # 2. Diagnóstico Inicial del Dataset
+        st.subheader("📊 Diagnóstico Inicial del Dataset")
         col1, col2 = st.columns([2, 1])
 
         with col1:
@@ -43,7 +43,7 @@ if uploaded_file is not None:
             st.dataframe(df.head(5), use_container_width=True)
 
         with col2:
-            st.markdown("**Resumen de anomal�as encontradas:**")
+            st.markdown("**Resumen de anomalías encontradas:**")
             total_filas, total_cols = df.shape
             filas_duplicadas = int(df.duplicated().sum())
             total_nulos = int(df.isnull().sum().sum())
@@ -56,12 +56,12 @@ if uploaded_file is not None:
 
         st.write("---")
 
-        # 3. Procesamiento y pipeline de limpieza al presionar el bot�n
-        st.subheader("? Procesamiento Autom�tico")
+        # 3. Procesamiento y pipeline de limpieza al presionar el botón
+        st.subheader("⚡ Procesamiento Automático")
         st.info(
-            "El sistema aplicar� transformaciones autom�ticas de tipos, limpieza de monedas, correcci�n de outliers, imputaci�n de nulos y estandarizaci�n de texto.")
+            "El sistema aplicará transformaciones automáticas de tipos, limpieza de monedas, corrección de outliers, imputación de nulos y estandarización de texto.")
 
-        if st.button("? Ejecutar Pipeline de Limpieza Completo", type="primary"):
+        if st.button("✨ Ejecutar Pipeline de Limpieza Completo", type="primary"):
             with st.spinner("Procesando y saneando el dataset..."):
 
                 df_cleaned = df.copy()
@@ -73,14 +73,14 @@ if uploaded_file is not None:
                         temp_series = pd.to_datetime(df_cleaned[col], errors='coerce')
                         if temp_series.notna().sum() / len(df_cleaned) > 0.8 and temp_series.notna().sum() > 0:
                             df_cleaned[col] = temp_series
-                            logs.append(f"? Columna **'{col}'** convertida a tipo Fecha/Hora (datetime).")
+                            logs.append(f"• Columna **'{col}'** convertida a tipo Fecha/Hora (datetime).")
                             continue
 
                     temp_series = pd.to_numeric(df_cleaned[col], errors='coerce')
                     if not pd.api.types.is_numeric_dtype(df_cleaned[col]) and (
                             temp_series.notna().sum() / len(df_cleaned) > 0.8):
                         df_cleaned[col] = temp_series
-                        logs.append(f"? Columna **'{col}'** convertida a tipo Num�rico.")
+                        logs.append(f"• Columna **'{col}'** convertida a tipo Numérico.")
                         continue
 
                     if not pd.api.types.is_datetime64_any_dtype(df_cleaned[col]) and not pd.api.types.is_numeric_dtype(
@@ -90,7 +90,7 @@ if uploaded_file is not None:
                 # --- B. Formatos de Moneda ---
                 for col in df_cleaned.select_dtypes(include='object').columns:
                     combined_string = ' '.join(df_cleaned[col].astype(str).dropna().tolist())
-                    currency_pattern = r'[?$��]'
+                    currency_pattern = r'[€$£¥]'
                     if pd.Series(combined_string).str.contains(currency_pattern, regex=True).any() or \
                             (df_cleaned[col].astype(str).str.contains(
                                 r'^\s*[+-]?(?:\d{1,3}(?:[.,]\d{3})*(?:[.,]\d+)?|\d+(?:[.,]\d+)?)\s*$',
@@ -107,7 +107,7 @@ if uploaded_file is not None:
                             cleaned_series = cleaned_series.str.replace(',', '', regex=False)
 
                         df_cleaned[col] = pd.to_numeric(cleaned_series, errors='coerce')
-                        logs.append(f"? Formato de moneda corregido y unificado en columna **'{col}'**.")
+                        logs.append(f"• Formato de moneda corregido y unificado en columna **'{col}'**.")
 
                 # --- C. Tratamiento de Outliers (Mediana IQR) ---
                 for col in df_cleaned.select_dtypes(include=np.number).columns:
@@ -125,16 +125,16 @@ if uploaded_file is not None:
                         median_val = df_cleaned[col].median()
                         df_cleaned.loc[outliers_mask, col] = median_val
                         logs.append(
-                            f"? Columna **'{col}'**: {outliers_count} valores at�picos reemplazados por la mediana ({median_val}).")
+                            f"• Columna **'{col}'**: {outliers_count} valores atípicos reemplazados por la mediana ({median_val}).")
 
-                # --- D. Imputaci�n de Valores Faltantes ---
+                # --- D. Imputación de Valores Faltantes ---
                 for col in df_cleaned.columns:
                     if pd.api.types.is_numeric_dtype(df_cleaned[col]):
                         if df_cleaned[col].isnull().any():
                             median_val = df_cleaned[col].median()
                             df_cleaned[col] = df_cleaned[col].fillna(median_val)
                             logs.append(
-                                f"? Columna **'{col}'**: Valores nulos num�ricos imputados con la mediana ({median_val}).")
+                                f"• Columna **'{col}'**: Valores nulos numéricos imputados con la mediana ({median_val}).")
                     elif pd.api.types.is_object_dtype(df_cleaned[col]):
                         df_cleaned[col] = df_cleaned[col].replace(
                             {'': np.nan, 'nan': np.nan, 'NaN': np.nan, 'None': np.nan, 'N/A': np.nan})
@@ -144,7 +144,7 @@ if uploaded_file is not None:
                             mode_val = df_cleaned[col].mode()[0] if not df_cleaned[col].mode().empty else 'Missing'
                             df_cleaned[col] = df_cleaned[col].fillna(mode_val)
                             logs.append(
-                                f"? Columna **'{col}'**: Valores vac�os/nulos de texto imputados con la moda ('{mode_val}').")
+                                f"• Columna **'{col}'**: Valores vacíos/nulos de texto imputados con la moda ('{mode_val}').")
 
                 # --- E. Saneamiento de Negativos ---
                 for col in df_cleaned.select_dtypes(include=np.number).columns:
@@ -156,57 +156,57 @@ if uploaded_file is not None:
                             median_non_negative = df_cleaned[col].median()
                         df_cleaned.loc[negative_mask, col] = median_non_negative
                         logs.append(
-                            f"? Columna **'{col}'**: {negative_count} valores negativos corregidos a la mediana positiva ({median_non_negative}).")
+                            f"• Columna **'{col}'**: {negative_count} valores negativos corregidos a la mediana positiva ({median_non_negative}).")
 
-                # --- F. Organizaci�n de Texto y Ortograf�a ---
+                # --- F. Organización de Texto y Ortografía ---
                 for col in df_cleaned.select_dtypes(include=['object']).columns:
                     if df_cleaned[col].notna().any():
                         df_cleaned[col] = df_cleaned[col].astype(str)
                         if 'municipio' in col.lower() or 'departamento' in col.lower():
-                            medellin_variations = ['Medell�n', 'Medellin', 'medell�n', 'MEDELLIN', 'MEdellin']
+                            medellin_variations = ['Medellín', 'Medellin', 'medellín', 'MEDELLIN', 'MEdellin']
                             for var in medellin_variations:
-                                df_cleaned[col] = df_cleaned[col].str.replace(var, 'Medell�n', case=False, regex=False)
+                                df_cleaned[col] = df_cleaned[col].str.replace(var, 'Medellín', case=False, regex=False)
                         df_cleaned[col] = df_cleaned[col].str.strip().str.title()
 
-                # Guardar en el estado de la sesi�n
+                # Guardar en el estado de la sesión
                 st.session_state['df_cleaned'] = df_cleaned
                 st.session_state['logs'] = logs
-                st.success("? �Proceso de limpieza completado de forma exitosa!")
+                st.success("🎉 ¡Proceso de limpieza completado de forma exitosa!")
 
-        # 4. Presentaci�n de Resultados y Descarga
+        # 4. Presentación de Resultados y Descarga
         if 'df_cleaned' in st.session_state:
             df_final = st.session_state['df_cleaned']
             logs_finales = st.session_state['logs']
 
             st.write("---")
-            st.subheader("? Reporte de Cambios Ejecutados")
+            st.subheader("📋 Reporte de Cambios Ejecutados")
             if logs_finales:
                 for log in logs_finales:
                     st.markdown(log)
             else:
                 st.write("El dataset estaba limpio. No se requirieron modificaciones estructurales.")
 
-            st.subheader("? Vista Previa del Dataset Limpio")
+            st.subheader("📈 Vista Previa del Dataset Limpio")
             st.dataframe(df_final.head(10), use_container_width=True)
             st.caption(f"Dimensiones finales: {df_final.shape[0]} filas y {df_final.shape[1]} columnas.")
 
-            # --- Generaci�n de Visualizaciones (EDA Autom�tico en Streamlit) ---
-            st.subheader("? An�lisis Exploratorio de Datos Autom�tico (EDA)")
+            # --- Generación de Visualizaciones (EDA Automático en Streamlit) ---
+            st.subheader("📊 Análisis Exploratorio de Datos Automático (EDA)")
 
             numerical_cols = df_final.select_dtypes(include=np.number).columns
             categorical_cols = df_final.select_dtypes(include=['object']).columns
 
             if not numerical_cols.empty:
-                st.markdown("**Distribuci�n de Variables Num�ricas:**")
+                st.markdown("**Distribución de Variables Numéricas:**")
                 for col in numerical_cols:
                     fig, ax = plt.subplots(figsize=(7, 3))
                     sns.histplot(df_final[col], kde=True, ax=ax, color='#1f77b4')
-                    ax.set_title(f'Distribuci�n de {col}')
+                    ax.set_title(f'Distribución de {col}')
                     st.pyplot(fig)
                     plt.close(fig)
 
             if not categorical_cols.empty:
-                st.markdown("**Top Frecuencias de Variables Categ�ricas (Top 10):**")
+                st.markdown("**Top Frecuencias de Variables Categóricas (Top 10):**")
                 for col in categorical_cols:
                     top_10 = df_final[col].value_counts().nlargest(10)
                     if not top_10.empty:
@@ -218,15 +218,15 @@ if uploaded_file is not None:
                         plt.close(fig)
 
             if len(numerical_cols) > 1:
-                st.markdown("**Matriz de Correlaci�n Num�rica:**")
+                st.markdown("**Matriz de Correlación Numérica:**")
                 fig, ax = plt.subplots(figsize=(8, 6))
                 sns.heatmap(df_final[numerical_cols].corr(), annot=True, cmap='coolwarm', fmt=".2f", ax=ax)
                 st.pyplot(fig)
                 plt.close(fig)
 
-            # --- Bot�n de Descarga Directa ---
+            # --- Botón de Descarga Directa ---
             st.write("---")
-            st.subheader("? Descargar Archivo Limpio")
+            st.subheader("💾 Descargar Archivo Limpio")
 
 
             @st.cache_data
@@ -238,7 +238,7 @@ if uploaded_file is not None:
             base_name = os.path.splitext(uploaded_file.name)[0]
 
             st.download_button(
-                label="? Descargar Dataset Limpio (CSV)",
+                label="📥 Descargar Dataset Limpio (CSV)",
                 data=csv_bytes,
                 file_name=f"{base_name}_limpio.csv",
                 mime="text/csv",
@@ -246,4 +246,8 @@ if uploaded_file is not None:
             )
 
     except Exception as e:
-        st.error(f"Ocurri� un error general al procesar el archivo: {e}")
+        st.error(f"Ocurrió un error general al procesar el archivo: {e}")
+
+
+
+
