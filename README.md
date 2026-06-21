@@ -7,7 +7,11 @@ Una herramienta eficiente y fácil de usar diseñada para automatizar el proceso
 ## 🚀 Demostración
 Aquí puedes ver cómo funciona la aplicación en acción:
 
-[]
+[
+
+
+
+]
 
 ## 🛠 Tecnologías Utilizadas
 * **Lenguaje:** [Ej: Python 3.10+]
@@ -24,4 +28,4 @@ Aquí puedes ver cómo funciona la aplicación en acción:
 
 1. Clona el repositorio:
    ```bash
-   git clone [https://github.com/tu-usuario/tu-repositorio.git](https://github.com/tu-usuario/tu-repositorio.git)
+   git clone [https://github.com/NehemiasLo/dataclean-app.git](https://github.com/NehemiasLo/dataclean-app.git)
