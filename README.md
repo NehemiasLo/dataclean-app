@@ -19,9 +19,9 @@ Aquí puedes ver cómo funciona la aplicación en acción:
 
 ## 🛠 Tecnologías Utilizadas
 
-* **Lenguaje:** [Ej: Python 3.10+]
-* **Librerías principales:** [Ej: Pandas, NumPy, Streamlit]
-* **Interfaz:** [Ej: Streamlit/React/Flask]
+* **Lenguaje:** Python 3.14
+* **Librerías principales:** Pandas, NumPy, Streamlit
+* **Interfaz:** Streamlit
 
 ## 📋 Características Principales
 
