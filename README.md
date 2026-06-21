@@ -43,3 +43,11 @@ https://limpiador-datos-pro.streamlit.app/
 3. Visualiza los cambios en tiempo real.
 
 4. Descarga tu archivo procesado.
+
+## 🤝 Contribución
+
+Las contribuciones son bienvenidas. Si deseas mejorar el proyecto, por favor abre un Issue o envía un Pull Request.
+
+## 📝 Licencia
+
+Este proyecto está bajo la licencia MIT.
