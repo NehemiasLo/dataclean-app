@@ -3,6 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Una herramienta eficiente y fácil de usar diseñada para automatizar el proceso de limpieza y preprocesamiento de datos, optimizando el flujo de trabajo para científicos de datos y analistas.
+Creada con ayuda de la IA.
 
 ## 🚀 Demostración
 Aquí puedes ver cómo funciona la aplicación en acción:
