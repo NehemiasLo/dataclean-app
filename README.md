@@ -15,25 +15,28 @@ Aquí puedes ver cómo funciona la aplicación en acción:
 
 
 ## 🛠 Tecnologías Utilizadas
+
 * **Lenguaje:** [Ej: Python 3.10+]
 * **Librerías principales:** [Ej: Pandas, NumPy, Streamlit]
 * **Interfaz:** [Ej: Streamlit/React/Flask]
 
 ## 📋 Características Principales
+
 * **Eliminación de duplicados:** Limpieza automática de registros repetidos.
 * **Manejo de valores nulos:** Opciones para rellenar o eliminar celdas vacías.
 * **Normalización de formatos:** Estandarización de fechas, textos y números.
 * **Exportación:** Descarga de archivos limpios en formato CSV/Excel.
 
-## ⚙️ APP
+## ⚙️ acceso a la app
 https://limpiador-datos-pro.streamlit.app/
 
 
-📖 Guía de Uso
-Sube tu archivo (CSV, Excel).
+## 📖 Guía de Uso
 
-Selecciona las técnicas de limpieza desde la barra lateral.
+1. Sube tu archivo (CSV, Excel).
 
-Visualiza los cambios en tiempo real.
+2. Selecciona las técnicas de limpieza desde la barra lateral.
 
-Descarga tu archivo procesado.
+3. Visualiza los cambios en tiempo real.
+
+4. Descarga tu archivo procesado.
