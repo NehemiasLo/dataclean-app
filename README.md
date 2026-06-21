@@ -7,11 +7,7 @@ Una herramienta eficiente y fácil de usar diseñada para automatizar el proceso
 ## 🚀 Demostración
 Aquí puedes ver cómo funciona la aplicación en acción:
 
-[
-
-
-
-]
+[]
 
 ## 🛠 Tecnologías Utilizadas
 * **Lenguaje:** [Ej: Python 3.10+]
