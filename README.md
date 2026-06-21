@@ -38,7 +38,7 @@ https://limpiador-datos-pro.streamlit.app/
 
 1. Sube tu archivo (CSV, Excel).
 
-2. Selecciona las técnicas de limpieza desde la barra lateral.
+2. Ejecuta la limpieza automática
 
 3. Visualiza los cambios en tiempo real.
 
