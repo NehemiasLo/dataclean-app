@@ -7,7 +7,7 @@ Creada con ayuda de la IA.
 
 ## 🚀 Demostración
 Aquí puedes ver cómo funciona la aplicación en acción:
-
+https://youtu.be/Fr5anVkJaDo 
 ## Cargando los datos
 
 <img width="859" height="301" alt="Captura desde 2026-06-21 09-44-11" src="https://github.com/user-attachments/assets/4e1505eb-b8cc-4013-84df-d5860b87a9a5" />
